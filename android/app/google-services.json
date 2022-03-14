@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "746979386767",
+    "project_id": "money-transfer-5c2e2",
+    "storage_bucket": "money-transfer-5c2e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746979386767:android:3c43f38e0496a95eafd7fa",
+        "android_client_info": {
+          "package_name": "com.example.dhukuti"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746979386767-1cpu70tk5u7h0gtfbka6qh9br70mi1qs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBybAtoMpkH83VdVUX7IT1u-byrYGIEhGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746979386767-1cpu70tk5u7h0gtfbka6qh9br70mi1qs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
