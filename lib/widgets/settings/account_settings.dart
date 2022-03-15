@@ -35,18 +35,10 @@ class AccountSettings extends StatelessWidget {
           SizedBox(
             height: ScreenUtil().setHeight(20),
           ),
-          _profileSettings(
-            'Add Payment Method',
-            Icons.add,
-          ),
-          SizedBox(
-            height: ScreenUtil().setHeight(16),
-          ),
           _notificatitonDarkMode('Push Notifications', true),
           SizedBox(
-            height: ScreenUtil().setHeight(5),
+            height: ScreenUtil().setHeight(45),
           ),
-          _notificatitonDarkMode('Dark Mode', false),
         ],
       ),
     );

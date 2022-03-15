@@ -41,11 +41,6 @@ class GroupMembersListTile extends StatelessWidget {
                   ),
                 ),
               ),
-              trailing: Icon(
-                Icons.arrow_forward_ios_outlined,
-                color: Theme.of(context).primaryColor,
-                size: ScreenUtil().setHeight(18),
-              ),
             ),
             Divider(
               height: ScreenUtil().setHeight(3),

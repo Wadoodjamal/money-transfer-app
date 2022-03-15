@@ -4,7 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class PaymentMakeSchedule extends StatefulWidget {
   const PaymentMakeSchedule({
     Key? key,
+    this.transactions,
   }) : super(key: key);
+
+  final int? transactions;
 
   @override
   State<PaymentMakeSchedule> createState() => _PaymentMakeScheduleState();
@@ -36,7 +39,7 @@ class _PaymentMakeScheduleState extends State<PaymentMakeSchedule> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextWithPadding(
-              text: 'Your total balance',
+              text: 'Total Transactions Balance',
               fontSize: 16,
               fontWeight: FontWeight.normal,
               leftPadding: ScreenUtil().setWidth(18),
@@ -53,99 +56,15 @@ class _PaymentMakeScheduleState extends State<PaymentMakeSchedule> {
               ),
             ),
             TextWithPadding(
-              text: '\$ 6,290,000',
+              text: '\$ ${widget.transactions}',
               fontWeight: FontWeight.bold,
               fontSize: 30,
               leftPadding: ScreenUtil().setWidth(18),
               rightPadding: ScreenUtil().setWidth(100),
+              bottomPadding: ScreenUtil().setHeight(30),
               fontColor: Theme.of(context).primaryColor,
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                PaymentButtons(
-                  text: 'Make a payment',
-                  leftPadding: ScreenUtil().setWidth(14),
-                  rightPadding: ScreenUtil().setWidth(14),
-                  topPadding: ScreenUtil().setHeight(16),
-                  bottomPadding: ScreenUtil().setHeight(28),
-                  callback: () => Navigator.pushNamed(context, '/Transfer'),
-                ),
-                PaymentButtons(
-                  text: 'Payment Schedule',
-                  rightPadding: ScreenUtil().setWidth(24),
-                  topPadding: ScreenUtil().setHeight(16),
-                  bottomPadding: ScreenUtil().setHeight(28),
-                ),
-              ],
-            ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class PaymentButtons extends StatefulWidget {
-  const PaymentButtons({
-    Key? key,
-    this.leftPadding,
-    this.rightPadding,
-    this.bottomPadding,
-    this.topPadding,
-    this.text,
-    this.callback,
-  }) : super(key: key);
-
-  final double? leftPadding;
-  final double? rightPadding;
-  final double? bottomPadding;
-  final double? topPadding;
-  final String? text;
-  final VoidCallback? callback;
-
-  @override
-  State<PaymentButtons> createState() => _PaymentButtonsState();
-}
-
-class _PaymentButtonsState extends State<PaymentButtons> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: widget.leftPadding != null ? widget.leftPadding! : 0,
-        right: widget.rightPadding != null ? widget.rightPadding! : 0,
-        top: widget.topPadding != null ? widget.topPadding! : 0,
-        bottom: widget.bottomPadding != null ? widget.bottomPadding! : 0,
-      ),
-      child: ElevatedButton(
-        onPressed: widget.callback,
-        style: ButtonStyle(
-          padding: MaterialStateProperty.all(
-            EdgeInsets.only(
-              left: ScreenUtil().setWidth(12),
-              right: ScreenUtil().setWidth(10),
-              top: ScreenUtil().setHeight(8),
-              bottom: ScreenUtil().setHeight(8),
-            ),
-          ),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                ScreenUtil().radius(20),
-              ),
-            ),
-          ),
-          backgroundColor:
-              MaterialStateProperty.all(Theme.of(context).primaryColor),
-        ),
-        child: Text(
-          widget.text!,
-          style: TextStyle(
-            fontWeight: FontWeight.normal,
-            fontSize: ScreenUtil().setSp(12),
-            color: Colors.white,
-          ),
         ),
       ),
     );

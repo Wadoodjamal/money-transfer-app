@@ -3,7 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NavigationDrawer extends StatefulWidget {
-  const NavigationDrawer({Key? key}) : super(key: key);
+  const NavigationDrawer({Key? key, this.username, this.name})
+      : super(key: key);
+
+  final String? username;
+  final String? name;
 
   @override
   _NavigationDrawerState createState() => _NavigationDrawerState();
@@ -15,6 +19,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     'Transactions',
     'Join a group',
     'Create a group',
+    'My Groups',
     'Settings'
   ];
 
@@ -33,64 +38,66 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
             ),
           ),
         ),
-        child: Column(
-          children: [
-            const UserProfile(),
-            DrawerMenuItems(
-              drawerMenuItemsTitle: drawerMenuItemsTitle,
-            ),
-            SizedBox(
-              height: ScreenUtil().setHeight(127),
-            ),
-            OutlinedButton(
-              style: ButtonStyle(
-                side: MaterialStateProperty.all(
-                  BorderSide(
-                    color: Theme.of(context).primaryColor,
-                    width: 2,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              UserProfile(name: widget.name, username: widget.username),
+              DrawerMenuItems(
+                drawerMenuItemsTitle: drawerMenuItemsTitle,
+              ),
+              SizedBox(
+                height: ScreenUtil().setHeight(100),
+              ),
+              OutlinedButton(
+                style: ButtonStyle(
+                  side: MaterialStateProperty.all(
+                    BorderSide(
+                      color: Theme.of(context).primaryColor,
+                      width: 2,
+                    ),
                   ),
-                ),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(
-                        ScreenUtil().radius(25),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          ScreenUtil().radius(25),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              onPressed: () {},
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: ScreenUtil().setHeight(24),
-                      bottom: ScreenUtil().setHeight(24),
-                      left: ScreenUtil().setWidth(33),
-                      right: ScreenUtil().setWidth(52),
-                    ),
-                    child: Text(
-                      'Sign Out',
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(23),
-                        fontFamily:
-                            Theme.of(context).textTheme.button!.fontFamily,
-                        fontWeight: FontWeight.normal,
-                        color: Theme.of(context).primaryColor,
+                onPressed: () {},
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: ScreenUtil().setHeight(24),
+                        bottom: ScreenUtil().setHeight(24),
+                        left: ScreenUtil().setWidth(33),
+                        right: ScreenUtil().setWidth(52),
+                      ),
+                      child: Text(
+                        'Sign Out',
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(23),
+                          fontFamily:
+                              Theme.of(context).textTheme.button!.fontFamily,
+                          fontWeight: FontWeight.normal,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     ),
-                  ),
-                  Icon(
-                    FontAwesomeIcons.signOutAlt,
-                    color: Theme.of(context).primaryColor,
-                    size: ScreenUtil().setHeight(20),
-                  ),
-                ],
-              ),
-            )
-          ],
+                    Icon(
+                      FontAwesomeIcons.signOutAlt,
+                      color: Theme.of(context).primaryColor,
+                      size: ScreenUtil().setHeight(20),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -101,7 +108,12 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
 class UserProfile extends StatelessWidget {
   const UserProfile({
     Key? key,
+    this.username,
+    this.name,
   }) : super(key: key);
+
+  final String? username;
+  final String? name;
 
   @override
   Widget build(BuildContext context) {
@@ -121,14 +133,14 @@ class UserProfile extends StatelessWidget {
           ),
           title: Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               UserProfileName(
-                text: 'Vighnesh Nikam',
+                text: '$name',
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
               ),
               UserProfileName(
-                text: '@Vighnesh Nikam',
+                text: '@$username',
                 fontWeight: FontWeight.normal,
                 fontSize: 14,
               ),
@@ -187,6 +199,7 @@ class _DrawerMenuItemsState extends State<DrawerMenuItems> {
     FontAwesomeIcons.moneyBill,
     FontAwesomeIcons.plus,
     FontAwesomeIcons.ellipsisV,
+    FontAwesomeIcons.objectGroup,
     FontAwesomeIcons.cog
   ];
 
@@ -201,6 +214,8 @@ class _DrawerMenuItemsState extends State<DrawerMenuItems> {
       Navigator.pushNamed(context, '/JoinAGroup');
     } else if (index == 3) {
       Navigator.pushNamed(context, '/CreateAGroup');
+    } else if (index == 4) {
+      Navigator.pushNamed(context, '/GroupMembers');
     } else {
       Navigator.pushNamed(context, '/Settings');
     }

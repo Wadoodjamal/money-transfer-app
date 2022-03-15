@@ -6,7 +6,10 @@ import 'menu_app_bar.dart';
 class AppBarWelcome extends StatefulWidget {
   const AppBarWelcome({
     Key? key,
+    this.name,
   }) : super(key: key);
+
+  final String? name;
 
   @override
   State<AppBarWelcome> createState() => _AppBarWelcomeState();
@@ -36,7 +39,8 @@ class _AppBarWelcomeState extends State<AppBarWelcome> {
               right: ScreenUtil().setWidth(148),
             ),
             child: Text(
-              'Good Morning Vighnesh,',
+              'Good Morning ${widget.name},',
+              maxLines: 2,
               style: TextStyle(
                 fontFamily: Theme.of(context).textTheme.button!.fontFamily,
                 fontWeight: FontWeight.normal,

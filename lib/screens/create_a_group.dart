@@ -18,7 +18,34 @@ class _CreateAGroupState extends State<CreateAGroup> {
   String time = '';
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
-  String? groupName = '';
+  String? _groupName;
+  String? _addDepositingPeriod;
+  String? _totalAmount;
+  String? _maxPeople;
+
+  void _setGroupName(value) {
+    setState(() {
+      _groupName = value;
+    });
+  }
+
+  void _setAddDepositingPeriod(value) {
+    setState(() {
+      _addDepositingPeriod = value;
+    });
+  }
+
+  void _setTotalAmount(value) {
+    setState(() {
+      _totalAmount = value;
+    });
+  }
+
+  void _setMaxPeople(value) {
+    setState(() {
+      _maxPeople = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,30 +101,31 @@ class _CreateAGroupState extends State<CreateAGroup> {
                       ),
                     ),
                     SizedBox(height: 52.h),
-                    const TextFormFields(
+                    TextFormFields(
                       height: 22,
                       text: 'GROUP NAME',
+                      func: _setGroupName,
                     ),
                     SizedBox(height: 34.h),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () async {
-                              DateTime? newDate = await showDatePicker(
-                                context: context,
-                                initialDate: selectedDate,
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime(2100),
-                              );
+                    GestureDetector(
+                      onTap: () async {
+                        DateTime? newDate = await showDatePicker(
+                          context: context,
+                          initialDate: selectedDate,
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100),
+                        );
 
-                              if (newDate == null) return;
-                              setState(() {
-                                selectedDate = newDate;
-                                date = newDate.toString();
-                              });
-                            },
+                        if (newDate == null) return;
+                        setState(() {
+                          selectedDate = newDate;
+                          date = newDate.toString();
+                        });
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(
                             child: TextFormFields(
                               text: 'STARTING DATE',
                               height: 16,
@@ -111,58 +139,62 @@ class _CreateAGroupState extends State<CreateAGroup> {
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(width: ScreenUtil().setWidth(42)),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () async {
-                              TimeOfDay? newTime = await showTimePicker(
-                                context: context,
-                                initialTime: TimeOfDay.now(),
-                              );
+                          SizedBox(width: ScreenUtil().setWidth(42)),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () async {
+                                TimeOfDay? newTime = await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now(),
+                                );
 
-                              if (newTime == null) return;
+                                if (newTime == null) return;
 
-                              setState(() {
-                                selectedTime = newTime;
-                                time = selectedTime.toString();
-                              });
-                            },
-                            child: TextFormFields(
-                              text: 'TIME',
-                              height: 16,
-                              labelText: '$selectedTime.format(context)',
-                              isIcon: true,
-                              icon: const Icon(
-                                FontAwesomeIcons.clock,
-                                color: Colors.black,
-                                size: 16,
+                                setState(() {
+                                  selectedTime = newTime;
+                                  time = selectedTime.toString();
+                                });
+                              },
+                              child: TextFormFields(
+                                text: 'TIME',
+                                height: 16,
+                                labelText:
+                                    '$selectedTime.hour:$selectedTime.minute',
+                                isIcon: true,
+                                icon: const Icon(
+                                  FontAwesomeIcons.clock,
+                                  color: Colors.black,
+                                  size: 16,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     SizedBox(height: 39.h),
-                    const TextFormFields(
+                    TextFormFields(
                       text: 'ADD DEPOSITING PERIOD',
                       height: 22,
+                      func: _setAddDepositingPeriod,
                     ),
                     SizedBox(height: 57.h),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Expanded(
+                        Expanded(
                           child: TextFormFields(
                             text: 'TOTAL AMOUNT',
                             height: 23,
+                            func: _setTotalAmount,
                           ),
                         ),
                         SizedBox(width: ScreenUtil().setWidth(52)),
-                        const Expanded(
+                        Expanded(
                           child: TextFormFields(
                             text: 'MAX PEOPLE',
                             height: 23,
+                            func: _setMaxPeople,
                           ),
                         ),
                       ],
@@ -187,16 +219,18 @@ class _CreateAGroupState extends State<CreateAGroup> {
                         SizedBox(
                           width: ScreenUtil().setWidth(15),
                         ),
-                        const Expanded(
-                          child: FriendsSettingsButtons(
-                            paddingBottom: 7,
-                            paddingTop: 7,
-                            paddingLeft: 13,
-                            paddingRight: 1,
-                            textColor: Color.fromARGB(255, 0, 194, 203),
-                            backgroundColor: Colors.white,
-                            borderColor: Color.fromARGB(255, 0, 194, 203),
-                            buttonText: 'Group Setting',
+                        Expanded(
+                          child: GestureDetector(
+                            child: const FriendsSettingsButtons(
+                              paddingBottom: 7,
+                              paddingTop: 7,
+                              paddingLeft: 13,
+                              paddingRight: 1,
+                              textColor: Color.fromARGB(255, 0, 194, 203),
+                              backgroundColor: Colors.white,
+                              borderColor: Color.fromARGB(255, 0, 194, 203),
+                              buttonText: 'Group Setting',
+                            ),
                           ),
                         ),
                       ],
@@ -247,22 +281,49 @@ class _CreateAGroupState extends State<CreateAGroup> {
   }
 
   _createANewGroup() async {
-    String createdDate =
-        '${selectedDate.day}-${selectedDate.month}-${selectedDate.year}';
-    String time =
-        '${selectedTime.hour}:${selectedTime.minute} ${selectedTime.period.name.toUpperCase()}';
+    if (_groupName != null &&
+        _addDepositingPeriod != null &&
+        _totalAmount != null &&
+        _maxPeople != null) {
+      String createdDate =
+          '${selectedDate.day}-${selectedDate.month}-${selectedDate.year}';
+      String time =
+          '${selectedTime.hour}:${selectedTime.minute} ${selectedTime.period.name.toUpperCase()}';
 
-    var userId = FirebaseAuth.instance.currentUser!.uid;
+      var userId = FirebaseAuth.instance.currentUser!.uid;
 
-    await FirebaseFirestore.instance.collection('allGroups').add({
-      'groupName': 'Testing',
-      'groupAdmin': userId,
-      'date': createdDate,
-      'addDepositingPeriod': 'Weekly',
-      'time': time,
-      'totalAmount': '100',
-      'maxPeople': 12,
-      'members': [],
-    });
+      await FirebaseFirestore.instance.collection('allGroups').add({
+        'groupName': _groupName,
+        'groupAdmin': userId,
+        'date': createdDate,
+        'addDepositingPeriod': _addDepositingPeriod,
+        'time': time,
+        'totalAmount': _totalAmount,
+        'maxPeople': _maxPeople,
+        'members': [],
+      });
+
+      Navigator.pushNamed(context, '/HomePage');
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: const Text('Error'),
+            content: const Text(
+                'All the fields should be filled properly in order to create a group.'),
+            actions: [
+              TextButton(
+                child: const Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }

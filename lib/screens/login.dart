@@ -145,7 +145,8 @@ class _SignInState extends State<Login> {
                 print(value.user!.email),
                 setState(() {
                   isUser = true;
-                })
+                }),
+                Navigator.pushNamed(context, '/HomePage'),
               });
     } catch (err) {
       print('error is: ${err.toString()}');
@@ -168,10 +169,6 @@ class _SignInState extends State<Login> {
       setState(() {
         isUser = false;
       });
-    }
-
-    if (isUser) {
-      Navigator.pushNamed(context, '/GroupOption');
     }
   }
 }

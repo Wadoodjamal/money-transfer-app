@@ -41,11 +41,16 @@ class _MenuAppBarState extends State<MenuAppBar> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(
-                  width: ScreenUtil().setWidth(42),
-                  height: ScreenUtil().setHeight(42),
-                  child: const Image(
-                    image: AssetImage('assets/notification.png'),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/Notifications');
+                  },
+                  child: SizedBox(
+                    width: ScreenUtil().setWidth(42),
+                    height: ScreenUtil().setHeight(42),
+                    child: const Image(
+                      image: AssetImage('assets/notification.png'),
+                    ),
                   ),
                 ),
                 SizedBox(

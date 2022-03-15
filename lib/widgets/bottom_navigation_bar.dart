@@ -15,7 +15,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
 
   void navigation() {
     if (_currentIndex == 0) {
-      Navigator.pushNamed(context, '/JoinAGroup');
+      Navigator.pushNamed(context, '/GroupOption');
     } else if (_currentIndex == 1) {
       Navigator.pushNamed(context, '/HomePage');
     } else {
